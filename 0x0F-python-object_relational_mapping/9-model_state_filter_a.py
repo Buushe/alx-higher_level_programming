@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 """
-Lists all States and corresponding Cities in the database hbtn_0e_101_usa.
+Lists all State objects that contain the letter a
+from the database hbtn_0e_6_usa.
+Usage: ./9-model_state_filter_a.py <mysql username> /
+                                   <mysql password> /
+                                   <database name>
 """
 import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from relationship_state import State
-from relationship_city import City
+from model_state import State
 
 if __name__ == "__main__":
     engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}"
@@ -16,6 +19,6 @@ if __name__ == "__main__":
     session = Session()
 
     for state in session.query(State).order_by(State.id):
-        print("{}: {}".format(state.id, state.name))
-        for city in state.cities:
-            print("    {}: {}".format(city.id, city.name))
+        if "a" in state.name:
+            print("{}: {}".format(state.id, state.name))
+
